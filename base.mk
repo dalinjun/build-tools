@@ -2,6 +2,8 @@
 
 SHELL := /usr/bin/env bash
 
+PROJECT_ROOT := $(notdir $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST))))))
+
 CURRENT_DATETIME = $(shell date -R)
 CURRENT_TIME = $(shell date +%H:%M:%S)
 
@@ -21,3 +23,6 @@ GIT_COMMIT_HASH := $(shell git rev-parse HEAD)
 LOG_ERROR = echo -e ${CURRENT_TIME} [ ${FONT_RED}ERROR${FONT_NEUTRAL} ]
 LOG_INFO = echo -e ${CURRENT_TIME} [ ${FONT_GREEN}INFO${FONT_NEUTRAL} ]
 LOG_WARN = echo -e ${CURRENT_TIME} [ ${FONT_YELLOW}WARN${FONT_NEUTRAL} ]
+
+.DEFAULT_GOAL: help
+include $(PROJECT_ROOT)/help/help.mk
