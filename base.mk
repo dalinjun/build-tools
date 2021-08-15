@@ -26,3 +26,7 @@ LOG_WARN = echo -e "${CURRENT_TIME} [ ${FONT_YELLOW}WARN${FONT_NEUTRAL} ]"
 
 .DEFAULT_GOAL: help
 include $(PROJECT_ROOT)/help/help.mk
+
+BUILD_COMMAND = $(LOG_INFO) Set the variable BUILD_COMMAND in your Makefile to the command used to build the binary.
+build: test #info: Build executable
+	@$(BUILD_COMMAND)
