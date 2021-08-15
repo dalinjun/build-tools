@@ -20,9 +20,9 @@ FONT_YELLOW := \033[1;33m
 GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 GIT_COMMIT_HASH := $(shell git rev-parse HEAD)
 
-LOG_ERROR = echo -e ${CURRENT_TIME} [ ${FONT_RED}ERROR${FONT_NEUTRAL} ]
-LOG_INFO = echo -e ${CURRENT_TIME} [ ${FONT_GREEN}INFO${FONT_NEUTRAL} ]
-LOG_WARN = echo -e ${CURRENT_TIME} [ ${FONT_YELLOW}WARN${FONT_NEUTRAL} ]
+LOG_ERROR = echo -e "${CURRENT_TIME} [ ${FONT_RED}ERROR${FONT_NEUTRAL} ]"
+LOG_INFO = echo -e "${CURRENT_TIME} [ ${FONT_GREEN}INFO${FONT_NEUTRAL} ]"
+LOG_WARN = echo -e "${CURRENT_TIME} [ ${FONT_YELLOW}WARN${FONT_NEUTRAL} ]"
 
 .DEFAULT_GOAL: help
 include $(PROJECT_ROOT)/help/help.mk
