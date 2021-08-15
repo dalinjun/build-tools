@@ -1,5 +1,8 @@
 COVERAGE_RESULT=cover.out
 
+build.containerized:
+	@CGO_ENABLED=1 GOOS=linux GOARCH=$$BUILDARCH $(BUILD_COMMAND)
+
 check: #info: Run static analysis
 	@golangci-lint run ./...
 
