@@ -1,6 +1,6 @@
 COVERAGE_RESULT=cover.out
 
-build.containerized:
+build.containerized: test
 	@CGO_ENABLED=1 GOOS=linux GOARCH=$$BUILDARCH $(BUILD_COMMAND)
 
 check: #info: Run static analysis
