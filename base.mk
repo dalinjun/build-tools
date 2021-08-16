@@ -4,7 +4,7 @@ SHELL := /usr/bin/env bash
 
 PROJECT_ROOT := $(notdir $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST))))))
 
-CURRENT_DATETIME = $(shell date -R)
+CURRENT_DATETIME = $(shell date +%F.%H%M%S)
 CURRENT_TIME = $(shell date +%H:%M:%S)
 
 FONT_BLACK := \033[30m

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ -z "$CONTAINER_IMAGE_NAME" ]; then
+  echo -e "Please set the ${FONT_WHITE}CONTAINER_IMAGE_NAME${FONT_NEUTRAL} variable, e.g. example.com/image."
+  exit 1
+fi
+
+if [[ ! -z $(git status -s) ]]; then
+  echo "Please commit your changes first. The commit hash is used as the image tag."
+  exit 2
+fi
+
+tag1="$CONTAINER_IMAGE_NAME:$GIT_COMMIT_HASH"
+tag2="$CONTAINER_IMAGE_NAME:$GIT_COMMIT_HASH-$CURRENT_DATETIME"
+
+docker buildx build --build-arg commit_id="$GIT_COMMIT_HASH" --platform=linux/arm64 -t "$tag1" -t "$tag2" .
