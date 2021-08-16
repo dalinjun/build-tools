@@ -11,6 +11,10 @@ The following targets are stable:
 - `init` for dependency resolution
 - `test` for running unit tests
 
+## docker
+
+Supplies targets for building containers with Docker.
+
 ## go
 
 Supplies targets for Go projects.
