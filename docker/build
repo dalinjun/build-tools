@@ -10,7 +10,6 @@ if [[ ! -z $(git status -s) ]]; then
   exit 2
 fi
 
-tag1="$CONTAINER_IMAGE_NAME:$GIT_COMMIT_HASH"
-tag2="$CONTAINER_IMAGE_NAME:$GIT_COMMIT_HASH-$CURRENT_DATETIME"
+tag="$CONTAINER_IMAGE_NAME:$GIT_COMMIT_HASH"
 
-docker buildx build --build-arg commit_id="$GIT_COMMIT_HASH" --platform=linux/arm64 -t "$tag1" -t "$tag2" .
+docker buildx build --build-arg commit_id="$GIT_COMMIT_HASH" --platform=linux/arm64 -t "$tag" .
