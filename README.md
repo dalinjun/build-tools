@@ -15,6 +15,10 @@ The following targets are stable:
 
 Supplies targets for building containers with Docker.
 
+## flutter
+
+Supplies targets for Flutter projects.
+
 ## go
 
 Supplies targets for Go projects.
