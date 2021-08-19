@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+HOME_MANAGER_CHANNEL=https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz
+
 NIX_INSTALLER=https://releases.nixos.org/nix/nix-2.3.15/install
 
 install_homebrew() {
@@ -23,6 +25,19 @@ install_homebrew() {
   echo "Homebrew installed."
 }
 
+install_home_manager() {
+  echo -e "${FONT_WHITE}## Installing Home Manager...${FONT_NEUTRAL}"
+
+  if ! command -v home-manager 1>/dev/null; then
+    nix-channel --add "$HOME_MANAGER_CHANNEL" home-manager
+    nix-channel --update
+
+    nix-shell '<home-manager>' -A install
+  fi
+
+  echo "Home Manager installed."
+}
+
 install_nix() {
   echo -e "${FONT_WHITE}## Installing Nix...${FONT_NEUTRAL}"
 
@@ -38,3 +53,5 @@ echo -e "${FONT_WHITE}# Setting up minimal environment for development${FONT_NEU
 install_homebrew
 
 install_nix
+
+install_home_manager
