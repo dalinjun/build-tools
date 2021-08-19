@@ -11,6 +11,11 @@ The following targets are stable:
 - `init` for dependency resolution
 - `test` for running unit tests
 
+## devenv
+
+Adds the `bootstrap` target which sets up the base development environment with common dependencies.
+If actions need to be done before or after the bootstrap, they can be added with a `bootstrap.init` and `bootstrap.post` target respectively.
+
 ## docker
 
 Supplies targets for building containers with Docker.

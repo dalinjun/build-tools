@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+install_homebrew() {
+  echo -e "${FONT_WHITE}## Installing Homebrew...${FONT_NEUTRAL}"
+
+  if ! command -v brew 1>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+    # The single quotes are here on purpose so that the expansion
+    # happens when the command is run when the shell is loaded
+    # shellcheck disable=SC2016
+    if [[ "$ARCHITECTURE" = "arm64" ]]; then
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+      echo 'eval "$(/usr/local/bin/brew shellenv)"' >> "$HOME/.zprofile"
+      eval "$(/usr/local/bin/brew shellenv)"
+    fi
+  fi
+
+  echo "Homebrew installed."
+}
+
+echo -e "${FONT_WHITE}# Setting up minimal environment for development${FONT_NEUTRAL}"
+
+install_homebrew
