@@ -1,0 +1,125 @@
+{ config, lib, pkgs, ... }:
+
+let
+  packages = with pkgs; [
+    curl
+    direnv
+    gh
+    gnupg
+    gnutar
+    kubectl
+    kubectx
+    kubernetes-helm
+    k9s
+    nano
+    pgcli
+    pinentry
+    starship
+    telepresence2
+    tig
+    zsh
+  ];
+
+  shellAliases = {
+    # Aliases for commonly used tools
+    gau = "git add --update";
+    gaup = "git add --update --patch";
+    gca = "git commit --amend";
+    gd = "git diff";
+    gdc = "git diff --cached";
+    gl = "git log";
+    gra = "git rebase --abort";
+    grc = "git rebase --continue";
+    gri = "git rebase --interactive";
+    gs = "git status";
+  };
+in {
+  home = {
+    file = {
+      ".gnupg/gpg-agent.conf".text = ''
+        pinentry-program ${config.home.homeDirectory}/.nix-profile/bin/pinentry
+      '';
+    };
+
+    homeDirectory = "/Users/${USER}";
+
+    inherit packages;
+
+    username = "${USER}";
+    stateVersion = "21.05";
+  };
+
+  programs = {
+    broot = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    git = {
+      enable = true;
+
+      extraConfig = {
+        core = {
+          editor = "nano";
+        };
+
+        commit.gpgsign = "true";
+        diff.colormoved = "zebra";
+        pull.rebase = "true";
+        remote.origin.prune = "true";
+        status.submodulesummary = "true";
+      };
+
+      package = pkgs.gitAndTools.gitFull;
+      userEmail = (lib.removeSuffix "\n" (builtins.readFile $CONFIG_EMAIL_FILE));
+      userName = (lib.removeSuffix "\n" (builtins.readFile $CONFIG_FULLNAME_FILE));
+    };
+
+    gpg.enable = true;
+
+    home-manager.enable = true;
+
+    zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      history.extended = true;
+
+      initExtra = ''
+        # Autocomplete for utilities
+        source <(helm completion zsh)
+        source <(gh completion -s zsh)
+        source <(kubectl completion zsh)
+
+        # Enable Starship shell
+        eval "$(starship init zsh)"
+
+        # Enable direnv
+        eval "$(direnv hook zsh)"
+
+        # Enable GnuPG TTY
+        export GPG_TTY=$(tty)
+
+        # Enable fn+arrow to jump to start or end of line
+        bindkey "^[[F" end-of-line
+        bindkey "^[[H" beginning-of-line
+
+        # Enable tab autocompletion of . and ..
+        zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
+        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+        # Enable autocompletion search of previous commands for up and down arrows
+        autoload -U up-line-or-beginning-search
+        autoload -U down-line-or-beginning-search
+        zle -N up-line-or-beginning-search
+        zle -N down-line-or-beginning-search
+        bindkey "^[[A" up-line-or-beginning-search
+        bindkey "^[[B" down-line-or-beginning-search
+
+        export PATH=/Users/${USER}/.nix-profile/bin:$PATH
+      '';
+
+      inherit shellAliases;
+    };
+  };
+}
