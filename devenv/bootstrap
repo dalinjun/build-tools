@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "$PROJECT_ROOT/lib/common"
+source "$PROJECT_ROOT/devenv/gnupg"
 
 HOME_MANAGER_CHANNEL=https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz
 HOME_MANAGER_NIX_FILE="$HOME/.config/nixpkgs/home.nix"
@@ -93,3 +94,5 @@ install_nix
 install_home_manager
 
 configure_home_manager
+
+configure_gnupg

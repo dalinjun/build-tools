@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+PRIVATE_KEY_NAME="$(cat "$CONFIG_FULLNAME_FILE") <$(cat "$CONFIG_EMAIL_FILE")>"
+PUBLIC_KEY_STORE="$PROJECT_ROOT/keys"
+
+configure_gnupg() {
+  echo -e "${FONT_WHITE}## Configuring GnuPG...${FONT_NEUTRAL}"
+
+  if ! gpg --list-secret-keys "$PRIVATE_KEY_NAME" > /dev/null; then
+    gpg --batch --quick-generate-key "$PRIVATE_KEY_NAME" rsa4096
+  fi
+
+  public_key_id=$(gpg --list-public-keys --with-colons "$PRIVATE_KEY_NAME" | grep pub:u | cut -d ':' -f 5)
+
+  gpg --armor --export "$public_key_id" > "$PUBLIC_KEY_STORE/$USER-$public_key_id.pub"
+
+  gpg --import "$PUBLIC_KEY_STORE"/*.pub
+
+  echo "GnuPG configured."
+}
+
+
