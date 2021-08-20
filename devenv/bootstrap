@@ -36,6 +36,15 @@ install_homebrew() {
   echo "Homebrew installed."
 }
 
+install_homebrew_bundle() {
+  echo -e "\033[1;37m## Installing Homebrew bundle...\033[0m"
+
+  brew bundle --file="$PROJECT_ROOT/devenv/Brewfile" --no-lock
+  brew cleanup
+
+  echo "Bundle installed."
+}
+
 install_home_manager() {
   echo -e "${FONT_WHITE}## Installing Home Manager...${FONT_NEUTRAL}"
 
@@ -64,6 +73,8 @@ echo -e "${FONT_WHITE}# Setting up minimal environment for development${FONT_NEU
 check_config
 
 install_homebrew
+
+install_homebrew_bundle
 
 install_nix
 
