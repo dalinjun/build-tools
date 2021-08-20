@@ -1,0 +1,12 @@
+#!/bin/bash
+
+query_config() {
+  if [ ! -f "$1" ]; then
+    echo "$2"
+    read -r data
+    echo -e "$data" > "$1"
+    echo "$1 created."
+  else
+    echo "$1 found."
+  fi
+}

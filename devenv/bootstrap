@@ -1,6 +1,31 @@
 #!/usr/bin/env bash
 
+source "$PROJECT_ROOT/lib/common"
+
+HOME_MANAGER_CHANNEL=https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz
+HOME_MANAGER_NIX_FILE="$HOME/.config/nixpkgs/home.nix"
+HOME_MANAGER_NIX_TEMPLATE="$PROJECT_ROOT/devenv/nix/home.nix.template"
+
 NIX_INSTALLER=https://releases.nixos.org/nix/nix-2.3.15/install
+
+check_config() {
+  echo -e "\033[1;37m## Check for config files...\033[0m"
+
+  mkdir -p "$CONFIG_HOME"
+
+  query_config "$CONFIG_EMAIL_FILE" "Please enter your email:"
+  query_config "$CONFIG_FULLNAME_FILE" "Please enter your full name:"
+}
+
+configure_home_manager() {
+  echo -e "${FONT_WHITE}## Applying Home Manager configuration...${FONT_NEUTRAL}"
+
+  nix-shell -p gettext --run "envsubst '\${CONFIG_EMAIL_FILE} \${CONFIG_FULLNAME_FILE} \${USER}' <${HOME_MANAGER_NIX_TEMPLATE} >${HOME_MANAGER_NIX_FILE}"
+
+  home-manager switch
+
+  echo "Configuration applied."
+}
 
 install_homebrew() {
   echo -e "${FONT_WHITE}## Installing Homebrew...${FONT_NEUTRAL}"
@@ -23,6 +48,28 @@ install_homebrew() {
   echo "Homebrew installed."
 }
 
+install_homebrew_bundle() {
+  echo -e "\033[1;37m## Installing Homebrew bundle...\033[0m"
+
+  brew bundle --file="$PROJECT_ROOT/devenv/Brewfile" --no-lock
+  brew cleanup
+
+  echo "Bundle installed."
+}
+
+install_home_manager() {
+  echo -e "${FONT_WHITE}## Installing Home Manager...${FONT_NEUTRAL}"
+
+  if ! command -v home-manager 1>/dev/null; then
+    nix-channel --add "$HOME_MANAGER_CHANNEL" home-manager
+    nix-channel --update
+
+    nix-shell '<home-manager>' -A install
+  fi
+
+  echo "Home Manager installed."
+}
+
 install_nix() {
   echo -e "${FONT_WHITE}## Installing Nix...${FONT_NEUTRAL}"
 
@@ -35,6 +82,14 @@ install_nix() {
 
 echo -e "${FONT_WHITE}# Setting up minimal environment for development${FONT_NEUTRAL}"
 
+check_config
+
 install_homebrew
 
+install_homebrew_bundle
+
 install_nix
+
+install_home_manager
+
+configure_home_manager

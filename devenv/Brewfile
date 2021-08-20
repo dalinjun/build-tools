@@ -1,0 +1,11 @@
+brew "mas"
+
+cask "docker"
+cask "flutter"
+cask "google-chrome"
+cask "iterm2"
+cask "microsoft-outlook"
+cask "microsoft-teams"
+cask "visual-studio-code"
+
+mas "Xcode", id: 497799835
