@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
 
+source "$PROJECT_ROOT/lib/common"
+
 HOME_MANAGER_CHANNEL=https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz
 
 NIX_INSTALLER=https://releases.nixos.org/nix/nix-2.3.15/install
+
+check_config() {
+  echo -e "\033[1;37m## Check for config files...\033[0m"
+
+  mkdir -p "$CONFIG_HOME"
+
+  query_config "$CONFIG_EMAIL_FILE" "Please enter your email:"
+  query_config "$CONFIG_FULLNAME_FILE" "Please enter your full name:"
+}
 
 install_homebrew() {
   echo -e "${FONT_WHITE}## Installing Homebrew...${FONT_NEUTRAL}"
@@ -49,6 +60,8 @@ install_nix() {
 }
 
 echo -e "${FONT_WHITE}# Setting up minimal environment for development${FONT_NEUTRAL}"
+
+check_config
 
 install_homebrew
 
