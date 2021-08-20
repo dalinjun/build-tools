@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+NIX_INSTALLER=https://releases.nixos.org/nix/nix-2.3.15/install
+
 install_homebrew() {
   echo -e "${FONT_WHITE}## Installing Homebrew...${FONT_NEUTRAL}"
 
@@ -21,6 +23,18 @@ install_homebrew() {
   echo "Homebrew installed."
 }
 
+install_nix() {
+  echo -e "${FONT_WHITE}## Installing Nix...${FONT_NEUTRAL}"
+
+  if ! command -v nix 1>/dev/null; then
+    /bin/bash -c "$(curl -L "$NIX_INSTALLER")" --darwin-use-unencrypted-nix-store-volume
+  fi
+
+  echo "Nix installed."
+}
+
 echo -e "${FONT_WHITE}# Setting up minimal environment for development${FONT_NEUTRAL}"
 
 install_homebrew
+
+install_nix
