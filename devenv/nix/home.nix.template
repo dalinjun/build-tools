@@ -2,10 +2,12 @@
 
 let
   packages = with pkgs; [
+    bash_5
     curl
     direnv
     exa
     gh
+    gnumake
     gnupg
     gnutar
     kubectl
