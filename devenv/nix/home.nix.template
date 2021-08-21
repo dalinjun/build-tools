@@ -4,6 +4,7 @@ let
   packages = with pkgs; [
     curl
     direnv
+    exa
     gh
     gnupg
     gnutar
@@ -32,6 +33,7 @@ let
     grc = "git rebase --continue";
     gri = "git rebase --interactive";
     gs = "git status";
+    ls = "exa";
   };
 in {
   home = {
