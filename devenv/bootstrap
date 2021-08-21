@@ -18,6 +18,14 @@ check_config() {
   query_config "$CONFIG_FULLNAME_FILE" "Please enter your full name:"
 }
 
+configure_direnv() {
+  echo -e "${FONT_WHITE}## Enabling direnv...${FONT_NEUTRAL}"
+
+  direnv allow .
+
+  echo "Direnv enabled."
+}
+
 configure_home_manager() {
   echo -e "${FONT_WHITE}## Applying Home Manager configuration...${FONT_NEUTRAL}"
 
@@ -96,3 +104,5 @@ install_home_manager
 configure_home_manager
 
 configure_gnupg
+
+configure_direnv
