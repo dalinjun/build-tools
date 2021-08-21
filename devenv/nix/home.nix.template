@@ -91,6 +91,10 @@ in {
         source <(gh completion -s zsh)
         source <(kubectl completion zsh)
 
+        # Enable gcloud
+        source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+        source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
         # Enable Starship shell
         eval "$(starship init zsh)"
 
