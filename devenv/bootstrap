@@ -6,7 +6,7 @@ source "$PROJECT_ROOT/lib/common"
 source "$PROJECT_ROOT/devenv/gnupg"
 
 HOME_MANAGER_CHANNEL=https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz
-HOME_MANAGER_NIX_FILE="$HOME/.config/nixpkgs/home.nix"
+HOME_MANAGER_NIX_PATH="$HOME/.config/nixpkgs"
 HOME_MANAGER_NIX_TEMPLATE="$PROJECT_ROOT/devenv/nix/home.nix.template"
 
 NIX_INSTALLER=https://releases.nixos.org/nix/nix-2.3.15/install
@@ -31,7 +31,8 @@ configure_direnv() {
 configure_home_manager() {
   echo -e "${FONT_WHITE}## Applying Home Manager configuration...${FONT_NEUTRAL}"
 
-  nix-shell -p gettext --run "envsubst '\${CONFIG_EMAIL_FILE} \${CONFIG_FULLNAME_FILE} \${USER}' <${HOME_MANAGER_NIX_TEMPLATE} >${HOME_MANAGER_NIX_FILE}"
+  nix-shell -p gettext --run "envsubst '\${CONFIG_EMAIL_FILE} \${CONFIG_FULLNAME_FILE} \${USER}' <${HOME_MANAGER_NIX_TEMPLATE} >${HOME_MANAGER_NIX_PATH}/home.nix"
+  cp "${PROJECT_ROOT}/basepkgs.nix" "${HOME_MANAGER_NIX_PATH}/."
 
   home-manager switch
 
