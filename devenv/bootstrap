@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 source "$PROJECT_ROOT/lib/common"
 source "$PROJECT_ROOT/devenv/gnupg"
 
