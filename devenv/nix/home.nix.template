@@ -2,12 +2,10 @@
 
 let
   packages = with pkgs; [
-    bash_5
     curl
     direnv
     exa
     gh
-    gnumake
     gnupg
     gnutar
     kubectl
@@ -21,7 +19,7 @@ let
     telepresence2
     tig
     zsh
-  ];
+  ] ++ import ./basepkgs.nix pkgs;
 
   shellAliases = {
     # Aliases for commonly used tools
