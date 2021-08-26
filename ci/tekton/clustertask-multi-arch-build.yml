@@ -9,7 +9,7 @@ metadata:
     tekton.dev/tags: buildah, build-image, push-image, multi-arch
 spec:
   description: >-
-    This task will build and push an image for both Arm and x86 using Docker.
+    This task can be used to build and push container images for multiple architectures.
   params:
   - name: ARCHITECTURES
     description: List of architectures to make the image for, e.g. amd64, arm64.
