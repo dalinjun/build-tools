@@ -28,6 +28,18 @@ configure_direnv() {
   echo "Direnv enabled."
 }
 
+configure_gcloud() {
+  echo -e "${FONT_WHITE}## Configuring Google SDK CLI...${FONT_NEUTRAL}"
+
+  if [ -z "$(gcloud auth list 2>/dev/null)" ]; then
+    gcloud auth login
+  fi
+
+  gcloud auth configure-docker europe-north1-docker.pkg.dev
+
+  echo "Google SDK CLI configured."
+}
+
 configure_home_manager() {
   echo -e "${FONT_WHITE}## Applying Home Manager configuration...${FONT_NEUTRAL}"
 
@@ -107,5 +119,7 @@ install_home_manager
 configure_home_manager
 
 configure_gnupg
+
+configure_gcloud
 
 configure_direnv
