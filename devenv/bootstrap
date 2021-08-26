@@ -3,7 +3,7 @@
 set -e
 
 source "$PROJECT_ROOT/lib/common"
-source "$PROJECT_ROOT/devenv/gnupg"
+source "$PROJECT_ROOT/lib/gnupg"
 
 HOME_MANAGER_CHANNEL=https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz
 HOME_MANAGER_NIX_PATH="$HOME/.config/nixpkgs"
