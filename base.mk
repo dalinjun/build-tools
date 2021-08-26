@@ -31,3 +31,7 @@ ifneq ($(BUILD_COMMAND),)
 build: test #info?BUILD_COMMAND: Build executable
 	@$(BUILD_COMMAND)
 endif
+
+ifneq ($(shell gcloud auth list 2>/dev/null),)
+GOOGLE_OAUTH_ACCESS_TOKEN = $(shell gcloud auth print-access-token)
+endif
