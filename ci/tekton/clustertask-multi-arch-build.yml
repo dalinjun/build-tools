@@ -47,7 +47,7 @@ spec:
       buildah manifest create "$manifest"
       for arch in "$@"; do
         echo "Building image for $arch..."
-        buildah bud --build-arg commit_id=$(params.COMMIT_HASH) --platform "linux/$arch" --tag "$tagless_manifest:$arch" .
+        buildah bud --build-arg commit_id=$(params.COMMIT_HASH) --build-arg "TARGETARCH=$arch" --build-arg TARGETOS=linux --platform "linux/$arch" --tag "$tagless_manifest:$arch" .
         buildah manifest add "$manifest" "$tagless_manifest:$arch"
       done
 
