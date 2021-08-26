@@ -40,6 +40,9 @@ spec:
       tagless_manifest="$(params.REGISTRY)/$(params.IMAGE)"
       manifest="$tagless_manifest:$(params.COMMIT_HASH)-$(date +%F.%H%M%S)"
 
+      # Login to registry.
+      cat /secret/key.json | buildah login -u _json_key --password-stdin $(params.REGISTRY)
+
       # Build container image for chosen architectures.
       buildah manifest create "$manifest"
       for arch in "$@"; do
@@ -47,9 +50,6 @@ spec:
         buildah bud --platform "linux/$arch" --tag "$tagless_manifest:$arch" .
         buildah manifest add "$manifest" "$tagless_manifest:$arch"
       done
-
-      # Login to registry.
-      cat /secret/key.json | buildah login -u _json_key --password-stdin $(params.REGISTRY)
 
       # Push manifest to registry.
       buildah manifest push --all "$manifest" "docker://$manifest"
