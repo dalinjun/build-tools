@@ -1,0 +1,65 @@
+apiVersion: tekton.dev/v1beta1
+kind: ClusterTask
+metadata:
+  name: multi-arch-build
+  annotations:
+    tekton.dev/displayName: multi-arch-build
+    tekton.dev/categories: Container image Build
+    tekton.dev/pipelines.minVersion: "0.12.1"
+    tekton.dev/tags: buildah, build-image, push-image, multi-arch
+spec:
+  description: >-
+    This task will build and push an image for both Arm and x86 using Docker.
+  params:
+  - name: ARCHITECTURES
+    description: List of architectures to make the image for, e.g. amd64, arm64.
+    type: array
+  - name: BUILDER_IMAGE
+    description: The location of the builder image.
+    default: quay.io/buildah/stable:v1.22.0
+  - name: COMMIT_HASH
+    description: Commit hash of the tip.
+  - name: CONTEXT
+    description: Path to the directory to use as build context.
+    default: .
+  - name: IMAGE
+    description: Name of the image docker will produce.
+  - name: REGISTRY
+    description: Registry to push the image to.
+  workspaces:
+  - name: source
+  steps:
+  - env:
+    - name: STORAGE_DRIVER
+      value: overlay
+    name: build-and-push
+    image: $(params.BUILDER_IMAGE)
+    workingDir: $(workspaces.source.path)/$(params.CONTEXT)
+    args: ["$(params.ARCHITECTURES[*])"]
+    script: |
+      tagless_manifest="$(params.REGISTRY)/$(params.IMAGE)"
+      manifest="$tagless_manifest:$(params.COMMIT_HASH)-$(date +%F.%H%M%S)"
+
+      # Build container image for chosen architectures.
+      buildah manifest create "$manifest"
+      for arch in "$@"; do
+        echo "Building image for $arch..."
+        buildah bud --platform "linux/$arch" --tag "$tagless_manifest:$arch" .
+        buildah manifest add "$manifest" "$tagless_manifest:$arch"
+      done
+
+      # Login to registry.
+      cat /secret/key.json | buildah login -u _json_key --password-stdin $(params.REGISTRY)
+
+      # Push manifest to registry.
+      buildah manifest push --all "$manifest" "docker://$manifest"
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /secret
+      name: gcr-writer
+      readOnly: true
+  volumes:
+  - name: gcr-writer
+    secret:
+      secretName: private-registry-writer
