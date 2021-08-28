@@ -33,3 +33,5 @@ COPY basepkgs.nix basepkgs.nix
 COPY shell.nix shell.nix
 RUN nix-shell --run "echo Installed base packages" \
   && rm basepkgs.nix shell.nix
+
+LABEL "Git commit"=$commit_id
