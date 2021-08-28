@@ -29,6 +29,11 @@ spec:
   workspaces:
   - name: source
   steps:
+  - args: ["--reset", "-p", "yes"]
+    image: multiarch/qemu-user-static
+    name: setup-qemu
+    securityContext:
+      privileged: true
   - env:
     - name: STORAGE_DRIVER
       value: overlay
