@@ -27,10 +27,7 @@ LOG_WARN = echo -e "${CURRENT_TIME} [ ${FONT_YELLOW}WARN${FONT_NEUTRAL} ]"
 .DEFAULT_GOAL: help
 include $(PROJECT_ROOT)/help/help.mk
 
-ifneq ($(BUILD_COMMAND),)
-build: test #info?BUILD_COMMAND: Build executable
-	@$(BUILD_COMMAND)
-endif
+BUILD_COMMAND=echo -e "Please set the \033[1;37mBUILD_COMMAND\033[0m variable in your Makefile."
 
 ifneq ($(shell gcloud auth list 2>/dev/null),)
 GOOGLE_OAUTH_ACCESS_TOKEN = $(shell gcloud auth print-access-token)
