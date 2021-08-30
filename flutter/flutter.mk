@@ -1,3 +1,6 @@
+build: test #info: Build Flutter executable
+	@$(BUILD_COMMAND)
+
 generate: 
 	@flutter pub run build_runner build
 
