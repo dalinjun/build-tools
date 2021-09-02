@@ -25,12 +25,6 @@ for line in lines:
     if "info" == cmd:
         instructions[target] = info
 
-    if "info?" in cmd:
-        varname = cmd.split('?')[1]
-
-        if varname in os.environ:
-            instructions[target] = info
-
     if len(target) > longest_target:
         longest_target = len(target)
 
