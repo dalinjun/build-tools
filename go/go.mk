@@ -1,9 +1,6 @@
 COVERAGE_RESULT=cover.out
 
 build: test #info: Build Go executable
-	@$(BUILD_COMMAND)
-
-build.containerized: test
 	@CGO_ENABLED=0 GOOS=$$TARGETOS GOARCH=$$TARGETARCH $(BUILD_COMMAND)
 
 check: generate #info: Run static analysis
