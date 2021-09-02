@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os
+import os, re
 from typing import OrderedDict
 
 COLUMN_SPACING = 4
@@ -17,10 +17,9 @@ instructions = OrderedDict()
 longest_target = 0
 
 for line in lines:
-    split = line.split(':')
-    target = split[0]
-    cmd = split[1].split('#')[1]
-    info = split[2].rstrip()
+    target = re.search("^(.*?):", line).group(1)
+    cmd = re.search("#(.*):", line).group(1)
+    info = re.search("(?<=#info: ).*", line).group(0)
 
     if "info" == cmd:
         instructions[target] = info
