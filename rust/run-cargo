@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ "$TARGETARCH" == "arm64" ]; then
+  target_arch=aarch64
+elif [ "$TARGETARCH" == "amd64" ]; then
+  target_arch=x86_64
+fi
+
+target="$target_arch-unknown-linux-musl"
+
+if [ "$1" == "test" ]; then
+  if [ -z "$target_arch" ]; then
+    cargo test --release
+  else
+    cargo test --release "$target"
+  fi
+
+  exit 0
+elif [ "$1" == "build" ]; then
+  if [ -z "$BUILD_TARGET" ]; then
+    echo -e "Please set the ${FONT_WHITE}BUILD_TARGET${FONT_NEUTRAL} in your Makefile."
+    exit 1
+  fi
+
+  if [ -z "$target_arch" ]; then
+    cargo build --release --bin "$BUILD_TARGET"
+  elif [ "$TARGETARCH" != "$BUILDARCH" ]; then
+    CC="$target_arch-linux-gnu-gcc" cargo build --release --bin "$BUILD_TARGET" --target "$target"
+  else
+    cargo build --release --bin "$BUILD_TARGET" --target "$target"
+  fi
+
+  if [ "$TARGETOS" == "linux" ]; then
+    cp "target/$target/release/$BUILD_TARGET" .
+  fi
+fi

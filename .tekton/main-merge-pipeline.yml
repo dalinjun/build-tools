@@ -46,5 +46,27 @@ spec:
     workspaces:
     - name: source
       workspace: build
+  - name: build-rust-builder-image
+    params:
+    - name: ARCHITECTURES
+      value:
+      - amd64
+      - arm64
+    - name: COMMIT_HASH
+      value: $(tasks.clone-repository.results.commit)
+    - name: CONTEXT
+      value: rust
+    - name: IMAGE
+      value: problem-child/private/rust-builder
+    - name: REGISTRY
+      value: europe-north1-docker.pkg.dev
+    runAfter:
+    - clone-repository
+    taskRef:
+      kind: ClusterTask
+      name: multi-arch-build
+    workspaces:
+    - name: source
+      workspace: build
   workspaces:
   - name: build
