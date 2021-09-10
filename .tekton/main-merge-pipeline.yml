@@ -24,7 +24,7 @@ spec:
     workspaces:
     - name: output
       workspace: build
-  - name: build-image
+  - name: build-golang-builder-image
     params:
     - name: ARCHITECTURES
       value:
@@ -33,9 +33,9 @@ spec:
     - name: COMMIT_HASH
       value: $(tasks.clone-repository.results.commit)
     - name: CONTEXT
-      value: ci/nix-builder
+      value: go
     - name: IMAGE
-      value: problem-child/private/nix-builder
+      value: problem-child/private/golang-builder
     - name: REGISTRY
       value: europe-north1-docker.pkg.dev
     runAfter:
