@@ -48,7 +48,7 @@ configure_home_manager() {
   echo -e "${FONT_WHITE}## Applying Home Manager configuration...${FONT_NEUTRAL}"
 
   nix-shell -p gettext --run "envsubst '\${CONFIG_EMAIL_FILE} \${CONFIG_FULLNAME_FILE} \${USER}' <${HOME_MANAGER_NIX_TEMPLATE} >${HOME_MANAGER_NIX_PATH}/home.nix"
-  cp "${PROJECT_ROOT}/ci/nix-builder/basepkgs.nix" "${HOME_MANAGER_NIX_PATH}/."
+  cp "${PROJECT_ROOT}/devenv/basepkgs.nix" "${HOME_MANAGER_NIX_PATH}/."
 
   home-manager switch
 

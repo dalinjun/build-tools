@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+VERSION=1.42.0
+
+NAME="golangci-lint-${VERSION}-linux-${TARGETARCH}"
+FILENAME="${NAME}.tar.gz"
+URL="https://github.com/golangci/golangci-lint/releases/download/v${VERSION}/${FILENAME}"
+
+curl -L "$URL" --output "$FILENAME"
+tar -xvf "$FILENAME" --strip-components 1
