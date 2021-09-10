@@ -45,13 +45,20 @@ spec:
       tagless_manifest="$(params.REGISTRY)/$(params.IMAGE)"
       manifest="$tagless_manifest:$(params.COMMIT_HASH)-$(date +%F.%H%M%S)"
 
+      builder_arch="$(uname -m)"
+      if [ "x86_64" == "$builder_arch" ]; then
+        build_platform=linux/amd64
+      elif [ "aarch64" == "$builder_arch" ]; then
+        build_platform=linux/arm64
+      fi
+
       # Login to registry.
       cat /secret/key.json | buildah login -u _json_key --password-stdin $(params.REGISTRY)
 
       # Build container image for chosen architectures.
       for arch in "$@"; do
         echo "Building image for $arch..."
-        buildah bud --build-arg commit_id=$(params.COMMIT_HASH) --build-arg "TARGETARCH=$arch" --build-arg TARGETOS=linux --manifest "$manifest" --platform "linux/$arch" --tag "$tagless_manifest:$arch" .
+        buildah bud --build-arg "BUILDPLATFORM=$build_platform" --build-arg commit_id=$(params.COMMIT_HASH) --build-arg "TARGETARCH=$arch" --build-arg TARGETOS=linux --manifest "$manifest" --platform "linux/$arch" .
       done
 
       # Push manifest to registry.
