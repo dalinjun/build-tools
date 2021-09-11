@@ -35,3 +35,7 @@ Included by the base makefile.
 
 Shows a list of available targets and a short explanation of their usage.
 Add a line starting with `#info:` after a make target to include it in the help.
+
+## rust
+
+Supplies targets for Rust projects.
