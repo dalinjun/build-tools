@@ -14,6 +14,8 @@ The following targets have the same semantics and are [extendable](https://www.g
 
 ## devenv
 
+Included by the base makefile.
+
 Adds the `bootstrap` target which sets up the base development environment with common dependencies.
 If actions need to be done before or after the bootstrap, they can be added with a `bootstrap.init` and `bootstrap.post` target respectively.
 
