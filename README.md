@@ -14,8 +14,19 @@ The following targets have the same semantics and are [extendable](https://www.g
 
 ## devenv
 
+Included by the base makefile.
+
 Adds the `bootstrap` target which sets up the base development environment with common dependencies.
 If actions need to be done before or after the bootstrap, they can be added with a `bootstrap.init` and `bootstrap.post` target respectively.
+
+## docs
+
+Included by the base makefile.
+
+Adds the `documentation` target which renders PlantUML files into PNG.
+
+Adds the `help` target which shows a list of available targets and a short explanation of their usage.
+Add a line starting with `#info:` after a make target to include it in the help.
 
 ## docker
 
@@ -28,13 +39,6 @@ Supplies targets for Flutter projects.
 ## go
 
 Supplies targets for Go projects.
-
-## help
-
-Included by the base makefile.
-
-Shows a list of available targets and a short explanation of their usage.
-Add a line starting with `#info:` after a make target to include it in the help.
 
 ## rust
 

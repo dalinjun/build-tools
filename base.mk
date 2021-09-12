@@ -25,7 +25,9 @@ LOG_INFO = echo -e "${CURRENT_TIME} [ ${FONT_GREEN}INFO${FONT_NEUTRAL} ]"
 LOG_WARN = echo -e "${CURRENT_TIME} [ ${FONT_YELLOW}WARN${FONT_NEUTRAL} ]"
 
 .DEFAULT_GOAL: help
-include $(PROJECT_ROOT)/help/help.mk
+include $(PROJECT_ROOT)/docs/docs.mk
+
+include $(PROJECT_ROOT)/devenv/devenv.mk
 
 BUILD_COMMAND=echo -e "Please set the \033[1;37mBUILD_COMMAND\033[0m variable in your Makefile."
 
