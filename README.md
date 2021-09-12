@@ -23,6 +23,8 @@ If actions need to be done before or after the bootstrap, they can be added with
 
 Included by the base makefile.
 
+Adds the `documentation` target which renders PlantUML files into PNG.
+
 Adds the `help` target which shows a list of available targets and a short explanation of their usage.
 Add a line starting with `#info:` after a make target to include it in the help.
 
