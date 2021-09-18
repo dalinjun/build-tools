@@ -16,7 +16,7 @@ spec:
     type: array
   - name: BUILDER_IMAGE
     description: The location of the builder image.
-    default: quay.io/buildah/stable:v1.22.0
+    default: quay.io/buildah/stable:v1.22.3
   - name: COMMIT_HASH
     description: Commit hash of the tip.
   - name: CONTEXT
