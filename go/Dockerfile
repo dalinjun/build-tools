@@ -14,7 +14,7 @@ COPY configure-builder .
 
 RUN ./configure-builder
 
-FROM docker.io/library/golang:1.16
+FROM docker.io/library/golang:1.17
 
 COPY --from=build /workspace/golangci-lint /go/bin/
 
