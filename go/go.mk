@@ -4,7 +4,7 @@ build:: #info: Build executable package
 	@CGO_ENABLED=0 GOOS=$$TARGETOS GOARCH=$$TARGETARCH $(BUILD_COMMAND)
 
 check:: #info: Run static analysis
-	@golangci-lint run ./...
+	@golangci-lint run --timeout=5m0s ./...
 
 cover:: #info: Show coverage report in browser
 	@go tool cover -html=$(COVERAGE_RESULT)
