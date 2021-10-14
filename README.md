@@ -1,6 +1,6 @@
 # build-tools
 
-This project contains functionality shared between all repositories.
+This project contains functionality shared between all organization repositories.
 It should be added as a submodule to any project that needs it and then included into the project makefile.
 
 The following targets have the same semantics and are [extendable](https://www.gnu.org/software/make/manual/html_node/Double_002dColon.html):
