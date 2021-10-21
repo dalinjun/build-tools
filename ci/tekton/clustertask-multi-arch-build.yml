@@ -42,8 +42,8 @@ spec:
     workingDir: $(workspaces.source.path)/$(params.CONTEXT)
     args: ["$(params.ARCHITECTURES[*])"]
     script: |
-      tagless_manifest="$(params.REGISTRY)/$(params.IMAGE)"
-      manifest="$tagless_manifest:$(params.COMMIT_HASH)-$(date +%F.%H%M%S)"
+      manifest="$(params.REGISTRY)/$(params.IMAGE):$(params.COMMIT_HASH)"
+      manifest_with_date="$manifest-$(date +%F.%H%M%S)"
 
       builder_arch="$(uname -m)"
       if [ "x86_64" == "$builder_arch" ]; then
@@ -63,6 +63,7 @@ spec:
 
       # Push manifest to registry.
       buildah manifest push --all "$manifest" "docker://$manifest"
+      buildah manifest push --all "$manifest" "docker://$manifest_with_date"
     securityContext:
       privileged: true
     volumeMounts:
