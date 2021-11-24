@@ -31,10 +31,6 @@ include $(PROJECT_ROOT)/devenv/devenv.mk
 
 BUILD_COMMAND=echo -e "Please set the \033[1;37mBUILD_COMMAND\033[0m variable in your Makefile."
 
-ifneq ($(shell gcloud auth list 2>/dev/null),)
-GOOGLE_OAUTH_ACCESS_TOKEN = $(shell gcloud auth print-access-token)
-endif
-
 build:: test
 
 check:: generate
