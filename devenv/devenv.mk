@@ -5,7 +5,7 @@ CONFIG_EMAIL_FILE = $(CONFIG_HOME)/email
 CONFIG_FULLNAME_FILE = $(CONFIG_HOME)/fullname
 CONFIG_HOME = $(HOME)/.config/dalinjun
 
-bootstrap:: #info: Bootstrap development environment
+bootstrap: #info: Bootstrap development environment
 ifeq ($(BOOTSTRAP_INIT_FOUND),1)
 	@make bootstrap.init
 endif
