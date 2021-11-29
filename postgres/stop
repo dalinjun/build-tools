@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+CONTAINERS="$(docker container ls --filter volume="$DATABASE_VOLUME_NAME" -q)"
+
+for container in $CONTAINERS; do
+  if [ -n "$container" ]; then
+    echo "Stopping database container..."
+    docker container stop "$container" > /dev/null
+  fi
+done

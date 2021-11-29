@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+IMAGE=postgres:14.1
+
+echo "Starting database container..."
+
+docker volume create "$DATABASE_VOLUME_NAME" > /dev/null
+
+docker run -d -e PGDATA=/pgdata -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" -p 5432:5432 --rm -v "$DATABASE_VOLUME_NAME":/pgdata "$IMAGE" > /dev/null

@@ -42,6 +42,10 @@ Supplies targets for Flutter projects.
 
 Supplies targets for Go projects.
 
+## postgres
+
+Supplies targets for managing a local development Postgres database.
+
 ## rust
 
 Supplies targets for Rust projects.
