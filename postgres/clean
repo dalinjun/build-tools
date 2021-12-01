@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+read -r -p "Are you sure you want to empty the database state? [y/N]" response
+
+response=${response,,}
+
+if [[ "$response" =~ ^(yes|y)$ ]]; then
+  docker volume rm "$DATABASE_VOLUME_NAME" > /dev/null
+  echo "Database is removed."
+else
+  echo "Canceled."
+fi
