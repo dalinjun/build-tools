@@ -6,7 +6,7 @@ clean.db: stop.db #info: Remove persisted database
 deploy.db: #info: Run Flyway migrations
 	@$(PROJECT_ROOT)/postgres/migrate
 
-start.db: stop.db #info: Start database container
+start.db: #info: Start database container
 	@$(PROJECT_ROOT)/postgres/start
 
 stop.db: #info: Stop database container

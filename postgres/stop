@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-CONTAINERS="$(docker container ls --filter volume="$DATABASE_VOLUME_NAME" -q)"
+SCRIPT_DIR="${BASH_SOURCE%/*}"
+
+source "$SCRIPT_DIR/common"
 
 for container in $CONTAINERS; do
   if [ -n "$container" ]; then

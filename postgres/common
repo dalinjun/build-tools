@@ -1,0 +1,2 @@
+export CONTAINERS="$(docker container ls --filter volume="$DATABASE_VOLUME_NAME" -q)"
+
