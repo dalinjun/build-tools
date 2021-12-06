@@ -5,7 +5,7 @@ if [ -z "$CONTAINER_IMAGE_NAME" ]; then
   exit 1
 fi
 
-if [[ ! -z $(git status -s) ]]; then
+if [[ -n $(git status -s) ]]; then
   echo "Please commit your changes first. The commit hash is used as the image tag."
   exit 2
 fi
