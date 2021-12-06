@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if [ -z "$CONTAINER_IMAGE_NAME" ]; then
-  echo -e "Please set the ${FONT_WHITE}CONTAINER_IMAGE_NAME${FONT_NEUTRAL} variable, e.g. example.com/image."
-  exit 1
-fi
+set -e
 
-if [[ ! -z $(git status -s) ]]; then
+PROJECT_DIR="$(basename "$PWD")"
+CONTAINER_IMAGE_NAME="${CONTAINER_IMAGE_NAME:-$PROJECT_DIR}"
+
+if [[ -n $(git status -s) ]]; then
   echo "Please commit your changes first. The commit hash is used as the image tag."
   exit 2
 fi
