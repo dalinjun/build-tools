@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="${BASH_SOURCE%/*}"
+
+source "$SCRIPT_DIR/common"
+
+IMAGE=google/cloud-sdk:latest
+PORT=8085
+
+if [ -z "$PUBSUB_PROJECT_ID" ]; then
+  echo -e "Please set environment variable ${FONT_WHITE}PUBSUB_PROJECT_ID${FONT_NEUTRAL}."
+  exit 1
+fi
+
+if [ -n "$PUBSUB_CONTAINERS" ]; then
+  echo "Pubsub container already running."
+else
+  echo "Starting pubsub container..."
+  docker run -d --label "$PUBSUB_LABEL" -p "$PORT:$PORT" --rm "$IMAGE" gcloud beta emulators pubsub start --host-port "0.0.0.0:$PORT" --project="$PUBSUB_PROJECT_ID"
+fi

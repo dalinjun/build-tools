@@ -38,6 +38,10 @@ Add a line starting with `#info:` after a make target to include it in the help.
 
 Supplies targets for Flutter projects.
 
+## gcloud
+
+Supplies targets for managing Google Cloud emulators for local development.
+
 ## go
 
 Supplies targets for Go projects.
