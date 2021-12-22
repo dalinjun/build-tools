@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="${BASH_SOURCE%/*}"
+
+source "$SCRIPT_DIR/common"
+
+for container in $PUBSUB_CONTAINERS; do
+  if [ -n "$container" ]; then
+    echo "Stopping pubsub container..."
+    docker container stop "$container" > /dev/null
+  fi
+done
