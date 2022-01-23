@@ -1,4 +1,4 @@
-DATABASE_VOLUME_NAME=$(shell basename "$$PWD")-database
+DATABASE_VOLUME_NAME?=$(shell basename "$$PWD")-database
 
 clean.db: stop.db #info: Remove persisted database
 	@$(PROJECT_ROOT)/postgres/clean
