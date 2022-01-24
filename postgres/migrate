@@ -7,7 +7,7 @@ SCRIPT_DIR="${BASH_SOURCE%/*}"
 source "$SCRIPT_DIR/common"
 
 CONTAINER_ID="$(fetch_container_id)"
-IMAGE=docker.io/flyway/flyway:8.2.0
+IMAGE=docker.io/flyway/flyway:8.4.2
 SCHEMA_DIR="${DATABASE_SCHEMA_DIR:-$PWD/sql}"
 
 if [ -z "$CONTAINER_ID" ]; then
