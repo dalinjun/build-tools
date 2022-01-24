@@ -7,6 +7,12 @@ SCRIPT_DIR="${BASH_SOURCE%/*}"
 source "$SCRIPT_DIR/common"
 
 CONTAINER_ID="$(fetch_container_id)"
+
+if [ -z "$CONTAINER_ID" ]; then
+  echo "Database container not found."
+  exit
+fi
+
 CONTAINER_IP="$(docker container inspect "$CONTAINER_ID" | jq ".[].NetworkSettings.IPAddress" -r)"
 IMAGE=docker.io/flyway/flyway:8.2.0
 JDBC_URL="jdbc:postgresql://$CONTAINER_IP/"
