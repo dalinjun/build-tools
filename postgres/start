@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
 SCRIPT_DIR="${BASH_SOURCE%/*}"
 
 source "$SCRIPT_DIR/common"
 
 IMAGE=postgres:14.1
 
-if [ -n "$CONTAINERS" ]; then
+if [ -n "$(fetch_container_id)" ]; then
   echo "Database container already running."
 else
   echo "Starting database container..."
