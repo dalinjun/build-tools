@@ -12,4 +12,4 @@ fi
 
 tag="$CONTAINER_IMAGE_NAME:$GIT_COMMIT_HASH"
 
-docker buildx build --build-arg commit_id="$GIT_COMMIT_HASH" --platform=linux/arm64 -t "$tag" .
+docker buildx build --build-arg commit_id="$GIT_COMMIT_HASH" --platform=linux/arm64 -t "$tag" -f Dockerfile "$GIT_REPO_PATH"
